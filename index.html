@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="model/style.css">
+    <script src="model/items.js"></script>
+    <script src="model/jquery.min.js"></script>
+    <script src="model/jquery-ui.min.js"></script>		
+    <script src="model/script.js"></script>
+</head>
+<body>
+    <div class="carttool hiddentool">
+        <input type="button" value="remove" class="removebutton hidden">
+        <input type="button" value="+" class="amount_controler" id="quantatiyplus">
+        <input type="button" value="-" class="amount_controler" id="quantatiyminus" >
+        <label >Amount:</label>
+        <label class="quantatiy value" >1</label>
+    </div>
+    <div class="container">
+        <div class="above">
+            <div class="menue">
+                <h1>Items</h1>
+                
+                <div class="item hidden">
+                    <img  class="itemimage"/>
+                    <!-- <label>name:</label> -->
+                    <div class="itemname"> </div>
+                    <!-- <label>price:</label> -->
+                    <div class="itemprice"></div>
+                    <input type="button" value="buy" class="buybutton">
+                </div>
+            </div>
+            <div class="cart">
+                <h1>Cart</h1>
+            </div>
+    
+        </div>
+        
+        <div class="bill ">
+            <label>Subtotal:</label>
+            <label id="subtotal"></label></br>
+            <label>Delivery:</label>
+            <label id="delivery"></label></br>
+            <label>VAT:</label>
+            <label id="VAT"></label>
+        </br>
+        <label>Total order:</label>
+        <label id="ordertoal"></label>
+    
+     </div>
+    </div>
+</body>
+</html>
