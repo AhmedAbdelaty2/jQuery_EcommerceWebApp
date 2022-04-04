@@ -1,6 +1,6 @@
 let cart=[]
 
-function myHelper( event ) {
+function myHelper(event) {
     return `<img src='${event.target.src}' class='itemimage'/>`;
   }
 
@@ -14,9 +14,10 @@ $( ()=>{
         
         $("body").children(".container").children(".above").children(".menue").children(".item").children(".itemimage").draggable({
             stop: function (event, ui) {
-                console.log(ui.position.left)
-                if(ui.position.left> 650){
-                movetocart($(this).siblings(".buybutton"))
+                console.log("left: "+ui.position.left)
+                console.log(ui.position.left/window.innerWidth)
+                if((ui.position.left/window.innerWidth)>.3){
+                movetocart($(this))
                 billrender();
                 }
                 
@@ -31,42 +32,29 @@ $( ()=>{
 )}
 $(()=>{
     $("body").on("click",".buybutton",function(){
-               movetocart($(this))
-              billrender();
-           })
+        movetocart($(this))
+        billrender();
+    })
      $("body").on("click","#quantatiyplus",function(){
-            increaseamount($(this))
-        })
+        increaseamount($(this))
+    })
      $("body").on("click","#quantatiyminus",function(){
         decreaseamount($(this))
-        })
-        $("body").on("click",".removebutton",function(){
-            remove($(this))
-            
-        })
+    })
+    $("body").on("click",".removebutton",function(){
+        remove($(this))
         
-        
+    })    
 })
+
 function movetocart(e){
    $(()=>{
-       let carttool= $(".carttool.hiddentool").clone()
-       carttool.removeClass('hiddentool')
-    let pursheditem=e.parents(".item").clone()
+        let carttool= $(".carttool.hiddentool").clone()
+        carttool.removeClass('hiddentool')
+        let pursheditem=e.parents(".item").clone()
         pursheditem.children(".buybutton").remove()
         $(carttool).appendTo(pursheditem)
         pursheditem.appendTo(".cart")
-        $("body").children(".container").children(".above").children(".cart").children(".item").children(".itemimage").draggable({
-            stop: function (event, ui) {
-                console.log(ui.position.left)
-                if(ui.position.left< 650){
-                remove($(this).siblings(".carttool").children(".removebutton"))
-                billrender();
-                }
-                
-            },
-            helper:myHelper,
-            containment:".above"
-        });
         let itemname=pursheditem.children(".itemname").html()
         let itemprice=pursheditem.children(".itemprice").html()
         let itemamount=1
@@ -78,7 +66,7 @@ function movetocart(e){
         cart.push(item)
 
         billrender()
-       
+
    })
 
 }
@@ -91,8 +79,6 @@ function increaseamount(e){
                 cart[i].amount++ 
                 break
             }
-                    
-
         }
         amount++
         e.siblings(".quantatiy.value").html(amount)
@@ -141,10 +127,17 @@ function billrender(){
             subtotal+=(element.price*element.amount)
         });
 
-        $(".bill").children("#subtotal").html(subtotal+" LE")
-        $(".bill").children("#delivery").html("15 LE")
-        $(".bill").children("#VAT").html(subtotal*(14/100)+" LE")
-        $(".bill").children("#ordertoal").html(((subtotal*1.14)+15)+" LE")   
+        if(subtotal==0){
+            $(".bill").children("#subtotal").html(subtotal+" LE")
+            $(".bill").children("#delivery").html("0 LE")
+            $(".bill").children("#VAT").html("0 LE")
+            $(".bill").children("#ordertoal").html("0 LE")
+        }else{
+            $(".bill").children("#subtotal").html(subtotal+" LE")
+            $(".bill").children("#delivery").html("15 LE")
+            $(".bill").children("#VAT").html(Math.round(subtotal*(14/100)*100)/100+" LE")
+            $(".bill").children("#ordertoal").html(Math.round(((subtotal*1.14)+15)*100)/100+" LE")
+        }
     })
 }
 
